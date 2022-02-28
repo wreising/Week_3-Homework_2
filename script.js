@@ -1,11 +1,11 @@
 // Variables
 
 
-let temp = ""
-let wind_speed = ""
-let humidity = ""
-let uv = ""
-let condition = ""
+let temp = 72
+let wind_speed = 7
+let humidity = 82
+let uv = 1
+let condition = "Sunny"
 let search = ""
 let lat = 51.5085
 let lon = -0.1257
@@ -37,6 +37,8 @@ function validation(temp, wind_speed, humidity, uv, condition) {
   console.log(temp, wind_speed, humidity, uv, condition);
 }
 
+console.log(temp)
+console.log(uv)
 // .then(res => res.json())
 // 4      .then(
 // 5        result => {
