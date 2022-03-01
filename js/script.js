@@ -5,6 +5,7 @@ let wind_speed = 7
 let humidity = 82
 let uv = 1
 let condition = "Sunny"
+let uvRatingIcon = ""
 
 let search = ""
 let apiKey = "dbf2ad6bc8d4b7f8bc210e9abadc43a2"
@@ -36,7 +37,7 @@ document.addEventListener('click', event => {
     fetchWeather(event.target.dataset.name)
     localStorage.setItem("lastCity", event.target.dataset.name)
   }
-} ) 
+})
 
 //   Add City Name to List
 function addCity() {
@@ -58,7 +59,7 @@ function addCity() {
 }
 
 // fetch weather data and populate page with weather data
-function fetchWeather(cityName) { 
+function fetchWeather(cityName) {
 
   // geo -> lat and lon of city search
   fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${apiKey}`)
@@ -83,11 +84,11 @@ function fetchWeather(cityName) {
 
           // text color based on UV index
           if (uv < 3) {
-            uvColor = "blue";
+            uvColor = "blue.png";
           } else if (uv < 7) {
-            uvColor = "yellow";
+            uvColor = "yellow.png"
           } else {
-            uvColor = "red"
+            uvColor = "red.png"
           }
 
           // populate page with current weather data
@@ -95,8 +96,7 @@ function fetchWeather(cityName) {
           document.getElementById("currentWind").innerHTML = wind_speed
           document.getElementById("currentHumidity").innerHTML = humidity
           document.getElementById("currentUv").innerHTML = uv
-          // document.getElementById("currentUv").setAttribute("style", "background-color: " + uvColor + "")
-          document.getElementById("currentUvBack").setAttribute("style", "background-color: " + uvColor + "")
+          document.getElementById("uvRatingIcon").innerHTML = "<img width=24px src='images/" + uvColor + "'>"
           document.getElementById("currentIcon").innerHTML = "<img src='https://openweathermap.org/img/w/" + condition + ".png'>"
 
           // get and populate Day+1
