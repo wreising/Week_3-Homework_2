@@ -27,12 +27,12 @@
   <div class="container-fluid">
     <!-- row -->
     <div class="row">
-      <div class="col-4 card">
+      <div class="col-4 card" style="background-color:rgb(234, 250, 255)">
         <h3>Search for City:</h3>
       <!-- city search -->
         <div>
           <input type="text" id="cityName" style="width: 100%;" placeholder="city name">
-          <button onclick="addCity()" class="btn btn-outline-secondary">Search</button> 
+          <button onclick="addCity()" class="btn btn-outline-secondary" style="background-color: white">Search</button> 
         </div>
       <!-- city search -->
         <div class="city">
@@ -70,7 +70,8 @@
                 </tr>
                 <tr>
                   <th scope="row">UV Index</th>
-                  <td colspan="2" id="uvRating"><span id="currentUv"></span></td>
+                  <td colspan="1" id="uvRating"><span id="currentUv"></span></td>
+                  <td colspan="1" id="uvRatingBack"><span id="currentUvBack"></span></td>
                 </tr>
               </tbody>
             </table>

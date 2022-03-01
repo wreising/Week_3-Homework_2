@@ -5,14 +5,13 @@ let wind_speed = 7
 let humidity = 82
 let uv = 1
 let condition = "Sunny"
-// let lat = 51.5085
-// let lon = -0.1257
 
 let search = ""
 let apiKey = "dbf2ad6bc8d4b7f8bc210e9abadc43a2"
 
 let currentCity = localStorage.getItem("lastCity")
-let cityname = localStorage.getItem("lastCity")
+let cityName = localStorage.getItem("lastCity")
+fetchWeather(cityName)
 
 let currentDate = moment().format("MMM Do YYYY")
 let currentDate1 = moment().add(1, 'days').format("MMM Do")
@@ -27,27 +26,30 @@ document.getElementById("currentDate2").innerHTML = currentDate2
 document.getElementById("currentDate3").innerHTML = currentDate3
 document.getElementById("currentDate4").innerHTML = currentDate4
 document.getElementById("currentDate5").innerHTML = currentDate5
-
 document.getElementById("currentCity").innerHTML = currentCity
 
-
-// search for city
+// onload -> take lastCity and show it
+// also -> eventListener takes cityName from cityList and puts it in the cityList button
+document.addEventListener('click', event => {
+  if (event.target.classList.contains("cityList")) {
+    document.getElementById("currentCity").innerHTML = event.target.dataset.name
+    fetchWeather(event.target.dataset.name)
+    localStorage.setItem("lastCity", event.target.dataset.name)
+  }
+} )
 
 //   Add City Name to List
-
 function addCity() {
 
   let cityName = document.getElementById('cityName').value,
     listNode = document.getElementById('cities'),
     liNode = document.createElement("li"),
-    txtNode = document.createTextNode(cityName);
+    txtNode = document.createTextNode(cityName)
 
   liNode.appendChild(txtNode)
   listNode.appendChild(liNode)
-  liNode.setAttribute("class", "btn list-group-item list-group-item-action")
-  liNode.setAttribute("id", "cityList")
-
-  document.getElementById("cityList").addEventListener("click", fetchWeather(cityName))
+  liNode.setAttribute("class", "cityList btn list-group-item list-group-item-action")
+  liNode.dataset.name = cityName
 
   localStorage.setItem("lastCity", cityName)
   document.getElementById("currentCity").innerHTML = cityName
@@ -55,34 +57,31 @@ function addCity() {
   fetchWeather(cityName)
 }
 
-// fetch weather data and post to page
+// fetch weather data and populate page with weather data
+function fetchWeather(cityName) { 
 
-function fetchWeather(cityName) {
+  // geo -> lat and lon of city search
   fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${apiKey}`)
     .then(function (response) {
       return response.json();
     })
-
     .then(function (data) {
-      console.log(data)
       let lat = data[0].lat
       let lon = data[0].lon
-      console.log(lat, lon)
 
+      // oneCall -> current weather and 5 day forecast
       fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=hourly,&appid=${apiKey}`)
         .then(function (response) {
           return response.json();
         })
-
-        .then(function (data) {
-          console.log(data)
+        .then(function (data) { // get current weather data
           temp = data.current.temp
           wind_speed = data.current.wind_speed
           humidity = data.current.humidity
           uv = data.current.uvi
           condition = data.current.weather[0].icon
-          console.log(temp, wind_speed, humidity, uv, condition)
 
+          // text color based on UV index
           if (uv < 3) {
             uvColor = "blue";
           } else if (uv < 7) {
@@ -91,13 +90,16 @@ function fetchWeather(cityName) {
             uvColor = "red"
           }
 
+          // populate page with current weather data
           document.getElementById("currentTemp").innerHTML = temp
           document.getElementById("currentWind").innerHTML = wind_speed
           document.getElementById("currentHumidity").innerHTML = humidity
           document.getElementById("currentUv").innerHTML = uv
-          document.getElementById("currentUv").setAttribute("style", "color: " + uvColor + "")
+          // document.getElementById("currentUv").setAttribute("style", "background-color: " + uvColor + "")
+          document.getElementById("currentUvBack").setAttribute("style", "background-color: " + uvColor + "")
           document.getElementById("currentIcon").innerHTML = "<img src='https://openweathermap.org/img/w/" + condition + ".png'>"
 
+          // get and populate Day+1
           temp1 = data.daily[1].temp.day
           wind_speed1 = data.daily[1].wind_speed
           humidity1 = data.daily[1].humidity
@@ -107,6 +109,7 @@ function fetchWeather(cityName) {
           document.getElementById("currentHumidity1").innerHTML = humidity1
           document.getElementById("currentIcon1").innerHTML = "<img src='https://openweathermap.org/img/w/" + condition1 + ".png'>"
 
+          // get and populate Day+2
           temp2 = data.daily[2].temp.day
           wind_speed2 = data.daily[2].wind_speed
           humidity2 = data.daily[2].humidity
@@ -116,6 +119,7 @@ function fetchWeather(cityName) {
           document.getElementById("currentHumidity2").innerHTML = humidity2
           document.getElementById("currentIcon2").innerHTML = "<img src='https://openweathermap.org/img/w/" + condition2 + ".png'>"
 
+          // get and populate Day+3
           temp3 = data.daily[3].temp.day
           wind_speed3 = data.daily[3].wind_speed
           humidity3 = data.daily[3].humidity
@@ -125,6 +129,7 @@ function fetchWeather(cityName) {
           document.getElementById("currentHumidity3").innerHTML = humidity3
           document.getElementById("currentIcon3").innerHTML = "<img src='https://openweathermap.org/img/w/" + condition3 + ".png'>"
 
+          // get and populate Day+4
           temp4 = data.daily[4].temp.day
           wind_speed4 = data.daily[4].wind_speed
           humidity4 = data.daily[4].humidity
@@ -134,6 +139,7 @@ function fetchWeather(cityName) {
           document.getElementById("currentHumidity4").innerHTML = humidity4
           document.getElementById("currentIcon4").innerHTML = "<img src='https://openweathermap.org/img/w/" + condition4 + ".png'>"
 
+          // get and populate Day+5
           temp5 = data.daily[5].temp.day
           wind_speed5 = data.daily[5].wind_speed
           humidity5 = data.daily[5].humidity
