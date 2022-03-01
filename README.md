@@ -1,5 +1,7 @@
 # 06 Server-Side APIs: Weather Dashboard
 
+Weather App showing weather data gathered from Openweathermap.com. The page allows the user to search for a city and see current weather data and a 5 day forecast.
+
 ## Acceptance Criteria
 
 ```
