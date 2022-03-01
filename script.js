@@ -90,43 +90,57 @@ fetch(`https://api.openweathermap.org/geo/1.0/direct?q="San Diego"&limit=5&appid
         document.getElementById("currentWind").innerHTML = wind_speed
         document.getElementById("currentHumidity").innerHTML = humidity
         document.getElementById("currentUv").innerHTML = uv
-        // document.getElementById("currentIcon").innerHTML = icon
-        document.getElementById("currentIcon").innerHTML = "<img src='https://openweathermap.org/img/w/01n.png'>"
+        document.getElementById("currentIcon").innerHTML = "<img src='https://openweathermap.org/img/w/" + condition + ".png'>"
 
-        temp1 = data.daily[0].temp.day
-        wind_speed1 = data.daily[0].wind_speed
-        humidity1 = data.daily[0].humidity
+        temp1 = data.daily[1].temp.day
+        wind_speed1 = data.daily[1].wind_speed
+        humidity1 = data.daily[1].humidity
+        condition1 = data.daily[1].weather[0].icon
         document.getElementById("currentTemp1").innerHTML = temp1
         document.getElementById("currentWind1").innerHTML = wind_speed1
         document.getElementById("currentHumidity1").innerHTML = humidity1
+        document.getElementById("currentIcon1").innerHTML = "<img src='https://openweathermap.org/img/w/" + condition1 + ".png'>"
 
-        temp2 = data.daily[1].temp.day
-        wind_speed2 = data.daily[1].wind_speed
-        humidity2 = data.daily[1].humidity
+
+        temp2 = data.daily[2].temp.day
+        wind_speed2 = data.daily[2].wind_speed
+        humidity2 = data.daily[2].humidity
+        condition2 = data.daily[2].weather[0].icon
         document.getElementById("currentTemp2").innerHTML = temp2
         document.getElementById("currentWind2").innerHTML = wind_speed2
         document.getElementById("currentHumidity2").innerHTML = humidity2
+        document.getElementById("currentIcon2").innerHTML = "<img src='https://openweathermap.org/img/w/" + condition2 + ".png'>"
 
-        temp3 = data.daily[2].temp.day
-        wind_speed3 = data.daily[2].wind_speed
-        humidity3 = data.daily[2].humidity
+
+        temp3 = data.daily[3].temp.day
+        wind_speed3 = data.daily[3].wind_speed
+        humidity3 = data.daily[3].humidity
+        condition3 = data.daily[3].weather[0].icon
         document.getElementById("currentTemp3").innerHTML = temp3
         document.getElementById("currentWind3").innerHTML = wind_speed3
         document.getElementById("currentHumidity3").innerHTML = humidity3
+        document.getElementById("currentIcon3").innerHTML = "<img src='https://openweathermap.org/img/w/" + condition3 + ".png'>"
 
-        temp4 = data.daily[3].temp.day
-        wind_speed4 = data.daily[3].wind_speed
-        humidity4 = data.daily[3].humidity
+
+        temp4 = data.daily[4].temp.day
+        wind_speed4 = data.daily[4].wind_speed
+        humidity4 = data.daily[4].humidity
+        condition4 = data.daily[4].weather[0].icon
         document.getElementById("currentTemp4").innerHTML = temp4
         document.getElementById("currentWind4").innerHTML = wind_speed4
         document.getElementById("currentHumidity4").innerHTML = humidity4
+        document.getElementById("currentIcon4").innerHTML = "<img src='https://openweathermap.org/img/w/" + condition4 + ".png'>"
 
-        temp5 = data.daily[4].temp.day
-        wind_speed5 = data.daily[4].wind_speed
-        humidity5 = data.daily[4].humidity
+
+        temp5 = data.daily[5].temp.day
+        wind_speed5 = data.daily[5].wind_speed
+        humidity5 = data.daily[5].humidity
+        condition5 = data.daily[5].weather[0].icon
         document.getElementById("currentTemp5").innerHTML = temp5
         document.getElementById("currentWind5").innerHTML = wind_speed5
         document.getElementById("currentHumidity5").innerHTML = humidity5
+        document.getElementById("currentIcon5").innerHTML = "<img src='https://openweathermap.org/img/w/" + condition5 + ".png'>"
+
 
 
       })
