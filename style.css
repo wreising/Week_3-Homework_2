@@ -60,6 +60,7 @@ h2 {
 h3 {
   font-size: 1.25em;
   text-align: center;
+  padding-top: 10px;
 }
 
 h4 {
@@ -69,4 +70,14 @@ h4 {
 
 table {
   font-size: .8em;
+}
+
+#citySearch {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.btn {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }

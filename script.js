@@ -1,164 +1,135 @@
 // Variables
 
-
 let temp = 72
 let wind_speed = 7
 let humidity = 82
 let uv = 1
 let condition = "Sunny"
+// let lat = 51.5085
+// let lon = -0.1257
+
 let search = ""
-let lat = 51.5085
-let lon = -0.1257
 let apiKey = "dbf2ad6bc8d4b7f8bc210e9abadc43a2"
-let oneCallUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=hourly,daily&appid=${apiKey}`
-let currentApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${search}&units=imperial&exclude=hourly,daily&APPID=${apiKey}`
-let geoApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${search}&limit=5&appid=${apiKey}`
+// ${search}
+let currentCity = localStorage.getItem("lastCity")
 
-// Weather Data
+let currentDate = moment().format("MMM Do YYYY")
+let currentDate1 = moment().add(1, 'days').format("MMM Do")
+let currentDate2 = moment().add(2, 'days').format("MMM Do")
+let currentDate3 = moment().add(3, 'days').format("MMM Do")
+let currentDate4 = moment().add(4, 'days').format("MMM Do")
+let currentDate5 = moment().add(5, 'days').format("MMM Do")
 
-fetch(oneCallUrl)
+document.getElementById("currentDate").innerHTML = currentDate
+document.getElementById("currentDate1").innerHTML = currentDate1
+document.getElementById("currentDate2").innerHTML = currentDate2
+document.getElementById("currentDate3").innerHTML = currentDate3
+document.getElementById("currentDate4").innerHTML = currentDate4
+document.getElementById("currentDate5").innerHTML = currentDate5
+
+document.getElementById("currentCity").innerHTML = currentCity
+
+
+// search button = City Name
+//   Pass City Name to 1st fetch
+// 1st fetch = lat lon
+//       Pass lat lon to 2nd fetch
+// 2nd fetch = data
+//           populate index with data
+
+
+//   Add City Name to List
+
+function addCity() {
+
+  let cityName = document.getElementById('cityName').value,
+    listNode = document.getElementById('cities'),
+    liNode = document.createElement("li"),
+    txtNode = document.createTextNode(cityName);
+
+  liNode.appendChild(txtNode)
+  listNode.appendChild(liNode)
+  liNode.setAttribute("class", "list-group-item list-group-item-action")
+
+  localStorage.setItem("lastCity", cityName)
+  document.getElementById("currentCity").innerHTML = cityName
+
+}
+
+
+// fetch weather data and post to page
+
+fetch(`https://api.openweathermap.org/geo/1.0/direct?q="San Diego"&limit=5&appid=${apiKey}`)
   .then(function (response) {
     return response.json();
   })
+
   .then(function (data) {
     console.log(data)
-    // console.log(data.current.temp);
-    // console.log(data.current.wind_speed);
-    let temp = data.current.temp
-    let wind_speed = data.current.wind_speed
-    let humidity = data.current.humidity
-    let uv = data.current.uvi
-    let condition = data.current.weather[0].main
-    // console.log(temp, wind_speed, humidity, uv, condition)
-    validation(temp, wind_speed, humidity, uv, condition)
+    let lat = data[0].lat
+    let lon = data[0].lon
+    console.log(lat, lon)
+
+    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=hourly,&appid=${apiKey}`)
+      .then(function (response) {
+        return response.json();
+      })
+
+      .then(function (data) {
+        console.log(data)
+        temp = data.current.temp
+        wind_speed = data.current.wind_speed
+        humidity = data.current.humidity
+        uv = data.current.uvi
+        condition = data.current.weather[0].icon
+        console.log(temp, wind_speed, humidity, uv, condition)
+
+        // let icon = "<img src='https://openweathermap.org/img/w/01n.png'>"
+
+        document.getElementById("currentTemp").innerHTML = temp
+        document.getElementById("currentWind").innerHTML = wind_speed
+        document.getElementById("currentHumidity").innerHTML = humidity
+        document.getElementById("currentUv").innerHTML = uv
+        // document.getElementById("currentIcon").innerHTML = icon
+        document.getElementById("currentIcon").innerHTML = "<img src='https://openweathermap.org/img/w/01n.png'>"
+
+        temp1 = data.daily[0].temp.day
+        wind_speed1 = data.daily[0].wind_speed
+        humidity1 = data.daily[0].humidity
+        document.getElementById("currentTemp1").innerHTML = temp1
+        document.getElementById("currentWind1").innerHTML = wind_speed1
+        document.getElementById("currentHumidity1").innerHTML = humidity1
+
+        temp2 = data.daily[1].temp.day
+        wind_speed2 = data.daily[1].wind_speed
+        humidity2 = data.daily[1].humidity
+        document.getElementById("currentTemp2").innerHTML = temp2
+        document.getElementById("currentWind2").innerHTML = wind_speed2
+        document.getElementById("currentHumidity2").innerHTML = humidity2
+
+        temp3 = data.daily[2].temp.day
+        wind_speed3 = data.daily[2].wind_speed
+        humidity3 = data.daily[2].humidity
+        document.getElementById("currentTemp3").innerHTML = temp3
+        document.getElementById("currentWind3").innerHTML = wind_speed3
+        document.getElementById("currentHumidity3").innerHTML = humidity3
+
+        temp4 = data.daily[3].temp.day
+        wind_speed4 = data.daily[3].wind_speed
+        humidity4 = data.daily[3].humidity
+        document.getElementById("currentTemp4").innerHTML = temp4
+        document.getElementById("currentWind4").innerHTML = wind_speed4
+        document.getElementById("currentHumidity4").innerHTML = humidity4
+
+        temp5 = data.daily[4].temp.day
+        wind_speed5 = data.daily[4].wind_speed
+        humidity5 = data.daily[4].humidity
+        document.getElementById("currentTemp5").innerHTML = temp5
+        document.getElementById("currentWind5").innerHTML = wind_speed5
+        document.getElementById("currentHumidity5").innerHTML = humidity5
+
+
+      })
   })
 
-function validation(temp, wind_speed, humidity, uv, condition) {
-  console.log(temp, wind_speed, humidity, uv, condition);
-}
-
-console.log(temp)
-console.log(uv)
-// .then(res => res.json())
-// 4      .then(
-// 5        result => {
-// 6          this.setState({
-// 7            data: result
-// 8          });
-// 9        },
-// 10        error => {
-// 11          console.log(error);
-// 12        }
-// 13      );
-
-
-
-// fetch("http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=dbf2ad6bc8d4b7f8bc210e9abadc43a2", {
-//   "method": "GET",
-// })
-//   .then(response => {
-//     console.log(response);
-//   })
-//   .catch(err => {
-//     console.log(err);
-//   });
-// // took ,ca from toronto just to see
-// fetch("https://api.openweathermap.org/data/2.5/weather?q=Toronto&appid=dbf2ad6bc8d4b7f8bc210e9abadc43a2", {
-//   "method": "GET",
-// })
-//   .then(response => {
-//     console.log(response);
-//   })
-//   .catch(err => {
-//     console.log(err);
-//   });
-
-let partlyCloudy = 3
-let rain = 4
-let thunderStorm = 5
-let snow = 6
-
-let weatherCondition = 2
-let weatherCondition1 = 5
-let weatherCondition2 = 1
-let weatherCondition3 = 6
-
-// set icon for currentIcon
-var img = document.createElement("img");
-
-if (weatherCondition == 1) {
-  img.src = "images/sunny.jpg";
-} else if (weatherCondition == 2) {
-  img.src = "images/cloudy.jpg";
-} else if (weatherCondition == 3) {
-  img.src = "images/partlyCloudy.jpg";
-} else if (weatherCondition == 4) {
-  img.src = "images/rain.jpg";
-} else if (weatherCondition == 5) {
-  img.src = "images/thunderStorm.jpg";
-} else if (weatherCondition == 6) {
-  img.src = "images/snow.jpg";
-}
-
-var src = document.getElementById("currentIcon");
-src.appendChild(img);
-
-// set icon for currentIcon1
-var img = document.createElement("img");
-
-if (weatherCondition1 == 1) {
-  img.src = "images/sunny.jpg";
-} else if (weatherCondition1 == 2) {
-  img.src = "images/cloudy.jpg";
-} else if (weatherCondition1 == 3) {
-  img.src = "images/partlyCloudy.jpg";
-} else if (weatherCondition1 == 4) {
-  img.src = "images/rain.jpg";
-} else if (weatherCondition1 == 5) {
-  img.src = "images/thunderStorm.jpg";
-} else if (weatherCondition1 == 6) {
-  img.src = "images/snow.jpg";
-}
-
-var src = document.getElementById("currentIcon1");
-src.appendChild(img);
-
-// set icon for currentIcon2
-var img = document.createElement("img");
-
-if (weatherCondition2 == 1) {
-  img.src = "images/sunny.jpg";
-} else if (weatherCondition2 == 2) {
-  img.src = "images/cloudy.jpg";
-} else if (weatherCondition2 == 3) {
-  img.src = "images/partlyCloudy.jpg";
-} else if (weatherCondition2 == 4) {
-  img.src = "images/rain.jpg";
-} else if (weatherCondition2 == 5) {
-  img.src = "images/thunderStorm.jpg";
-} else if (weatherCondition2 == 6) {
-  img.src = "images/snow.jpg";
-}
-
-var src = document.getElementById("currentIcon2");
-src.appendChild(img);
-
-// set icon for currentIcon3
-var img = document.createElement("img");
-
-if (weatherCondition3 == 1) {
-  img.src = "images/sunny.jpg";
-} else if (weatherCondition3 == 2) {
-  img.src = "images/cloudy.jpg";
-} else if (weatherCondition3 == 3) {
-  img.src = "images/partlyCloudy.jpg";
-} else if (weatherCondition3 == 4) {
-  img.src = "images/rain.jpg";
-} else if (weatherCondition3 == 5) {
-  img.src = "images/thunderStorm.jpg";
-} else if (weatherCondition3 == 6) {
-  img.src = "images/snow.jpg";
-}
-
-var src = document.getElementById("currentIcon3");
-src.appendChild(img);
+// https://openweathermap.org/img/w/${weather.weather[0].icon}.png

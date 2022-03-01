@@ -15,7 +15,7 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
 
-  <title>Work Day Scheduler</title>
+  <title>Weather Search</title>
 </head>
 
 <body>
@@ -28,51 +28,52 @@
     <!-- row -->
     <div class="row">
       <div class="col-4 card">
-        <h2>Search for City:</h2>
+        <h3>Search for City:</h3>
+      <!-- city search -->
         <div>
-          <input type="text" value="city name">
+          <input type="text" id="cityName" style="width: 100%;" placeholder="city name">
+          <button onclick="addCity()" class="btn btn-outline-secondary">Search</button> 
         </div>
-        <br>
+      <!-- city search -->
         <div class="city">
-          <ul class="list-group">
-            <li class="list-group-item list-group-item-action">Seattle</li>
-            <li class="list-group-item list-group-item-action">Portland</li>
-            <li class="list-group-item list-group-item-action">San Fransico</li>
-            <li class="list-group-item list-group-item-action">Cupertino</li>
-            <li class="list-group-item list-group-item-action">Los Angeles</li>
-            <li class="list-group-item list-group-item-action">Disneyland</li>
-            <li class="list-group-item list-group-item-action">San Juan Capistrano</li>
-            <li class="list-group-item list-group-item-action">San Diego</li>
+      <!-- list to add onto with search -->
+          <ul class="list-group" id="cities">
+            <li class="list-group-item list-group-item-action">first</li>
           </ul>
+      <!-- list to add onto with search -->
         </div>
       </div>
       <div class="col-8" style="padding-left: 25px;">
-        <div class="card">
-          <h2 style="text-align: left; padding-top: 10px; padding-left: 15px;">City Name - <span id=currentDate>Current Date</span></h2>
+        <div class="card" style="background-color: rgb(234, 250, 255);">
+      <!-- current city and date -->
+          <h2 style="text-align: left; padding-top: 10px; padding-left: 15px;"><span id="currentCity"></span> - <span id="currentDate"></span></h2>
           <div class="row">
             <table class="table" style="width: 40%; margin-left: 25px;">
+              <thead>
                 <tr>
                   <th scope="col" id="currentIcon"></th>
+                  <!-- <th scope="col" id="currentIcon"><img src=""></th> -->
+                  <!-- <th scope="col" id="currentIcon"><img src="https://openweathermap.org/img/w/01n.png"></th> -->
                   <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">High Temp</th>
-                  <th scope="row">degrees</th>
+                  <th scope="row">Temp:</th>
+                  <th scope="row"><span id="currentTemp"></span>ºF</th>
                 </tr>
                 <tr>
                 <tr>
-                  <th scope="row">Low Temp</th>
-                  <td colspan="2">degrees</td>
+                  <th scope="row">Wind:</th>
+                  <td colspan="2"><span id="currentWind"></span> MPH</td>
                 </tr>
                 <tr>
                   <th scope="row">Humidity</th>
-                  <td colspan="2">percentage</td>
+                  <td colspan="2"><span id="currentHumidity">%</span></td>
                 </tr>
                 <tr>
                   <th scope="row">UV Index</th>
-                  <td colspan="2">number</td>
+                  <td colspan="2"><span id="currentUv"></span></td>
                 </tr>
               </tbody>
             </table>
@@ -81,8 +82,9 @@
         <hr>
         <h2>Daily Forecast</h2>
         <div class="row">
+          <!-- Current Day +1 -->
           <div class="col-4 card">
-            <h3>Current Date +1</h3>
+            <h3 id="currentDate1"></h3>
             <table class="table">
               <thead>
                 <tr>
@@ -92,19 +94,25 @@
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">High Temp</th>
-                  <th scope="row">degrees</th>
+                  <th scope="row">Temp:</th>
+                  <th scope="row"><span id="currentTemp1"></span>ºF</th>
                 </tr>
                 <tr>
                 <tr>
-                  <th scope="row">Low Temp</th>
-                  <td colspan="2">degrees</td>
+                  <th scope="row">Wind:</th>
+                  <td colspan="2"><span id="currentWind1"></span> MPH</td>
+                </tr>
+                <tr>
+                  <th scope="row">Humidity::</th>
+                  <td colspan="2"><span id="currentHumidity1"></span> %</td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <!-- Current Day +1 -->
+          <!-- Current Day +2 -->
           <div class="col-4 card">
-            <h3>Current Date +2</h3>
+            <h3 id="currentDate2"></h3>
             <table class="table">
               <thead>
                 <tr>
@@ -114,19 +122,25 @@
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">High Temp</th>
-                  <th scope="row">degrees</th>
+                  <th scope="row">Temp:</th>
+                  <th scope="row"><span id="currentTemp2"></span>ºF</th>
                 </tr>
                 <tr>
                 <tr>
-                  <th scope="row">Low Temp</th>
-                  <td colspan="2">degrees</td>
+                  <th scope="row">Wind:</th>
+                  <td colspan="2"><span id="currentWind2"></span> MPH</td>
+                </tr>
+                <tr>
+                  <th scope="row">Humidity::</th>
+                  <td colspan="2"><span id="currentHumidity2"></span> %</td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <!-- Current Day +2 -->
+          <!-- Current Day +3 -->
           <div class="col-4 card">
-            <h3>Current Date +3</h3>
+            <h3 id="currentDate3"></h3>
             <table class="table">
               <thead>
                 <tr>
@@ -136,17 +150,78 @@
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">High Temp</th>
-                  <th scope="row">degrees</th>
+                  <th scope="row">Temp:</th>
+                  <th scope="row"><span id="currentTemp3"></span>ºF</th>
                 </tr>
                 <tr>
                 <tr>
-                  <th scope="row">Low Temp</th>
-                  <td colspan="2">degrees</td>
+                  <th scope="row">Wind:</th>
+                  <td colspan="2"><span id="currentWind3"></span> MPH</td>
+                </tr>
+                <tr>
+                  <th scope="row">Humidity::</th>
+                  <td colspan="2"><span id="currentHumidity3"></span> %</td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <!-- Current Day +3 -->
+          <!-- Current Day +4 --> 
+          <div class="col-4 card">
+            <h3 id="currentDate4"></h3>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" id="currentIcon4"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Temp:</th>
+                  <th scope="row"><span id="currentTemp4"></span>ºF</th>
+                </tr>
+                <tr>
+                <tr>
+                  <th scope="row">Wind:</th>
+                  <td colspan="2"><span id="currentWind4"></span> MPH</td>
+                </tr>
+                <tr>
+                  <th scope="row">Humidity::</th>
+                  <td colspan="2"><span id="currentHumidity4"></span> %</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- Current Day +4 -->
+          <!-- Current Day +5 -->
+          <div class="col-4 card">
+            <h3 id="currentDate5"></h3>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" id="currentIcon5"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Temp:</th>
+                  <th scope="row"><span id="currentTemp5"></span>ºF</th>
+                </tr>
+                <tr>
+                <tr>
+                  <th scope="row">Wind:</th>
+                  <td colspan="2"><span id="currentWind5"></span> MPH</td>
+                </tr>
+                <tr>
+                  <th scope="row">Humidity::</th>
+                  <td colspan="2"><span id="currentHumidity5"></span> %</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- Current Day +5 -->
         </div>
       </div>
     </div>
