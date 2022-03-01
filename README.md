@@ -25,4 +25,4 @@ WHEN I open the weather dashboard
 
 ## Screenshot
 
-[![image alt text](images/screen_shot.png)]
+![](images/screen_shot.png)
