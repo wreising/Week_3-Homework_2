@@ -36,7 +36,7 @@ document.addEventListener('click', event => {
     fetchWeather(event.target.dataset.name)
     localStorage.setItem("lastCity", event.target.dataset.name)
   }
-} )
+} ) 
 
 //   Add City Name to List
 function addCity() {
