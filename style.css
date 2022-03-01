@@ -81,3 +81,9 @@ table {
   margin-top: 5px;
   margin-bottom: 5px;
 }
+
+footer {
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 5px;
+}

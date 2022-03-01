@@ -84,12 +84,20 @@ fetch(`https://api.openweathermap.org/geo/1.0/direct?q="San Diego"&limit=5&appid
         condition = data.current.weather[0].icon
         console.log(temp, wind_speed, humidity, uv, condition)
 
-        // let icon = "<img src='https://openweathermap.org/img/w/01n.png'>"
+        if (uv < 3) {
+          uvColor = "blue";
+        } else if (uv < 7) {
+          uvColor = "yellow";
+        } else {
+          uvColor = "red"
+        }
 
         document.getElementById("currentTemp").innerHTML = temp
         document.getElementById("currentWind").innerHTML = wind_speed
         document.getElementById("currentHumidity").innerHTML = humidity
         document.getElementById("currentUv").innerHTML = uv
+        document.getElementById("currentUv").setAttribute("style", "color: " + uvColor + "")
+        // document.getElementById("currentUv").setAttribute("style", "background-color: " + uvColor + "")
         document.getElementById("currentIcon").innerHTML = "<img src='https://openweathermap.org/img/w/" + condition + ".png'>"
 
         temp1 = data.daily[1].temp.day
@@ -100,7 +108,6 @@ fetch(`https://api.openweathermap.org/geo/1.0/direct?q="San Diego"&limit=5&appid
         document.getElementById("currentWind1").innerHTML = wind_speed1
         document.getElementById("currentHumidity1").innerHTML = humidity1
         document.getElementById("currentIcon1").innerHTML = "<img src='https://openweathermap.org/img/w/" + condition1 + ".png'>"
-
 
         temp2 = data.daily[2].temp.day
         wind_speed2 = data.daily[2].wind_speed
